@@ -1,0 +1,35 @@
+tools (11): listOrganizations, listProjects, listPipelines, listPipelineDeployments, getSuccessfulRunRecency, listPipelineRuns, getPipelineRun, getPipelineRunProgress, getPipelineRunCompletion, triage_failed_runs, find_stale_pipelines
+
+Failed-run triage for fake-org-20261118-133813-897316569/data-pipelines (environment dev)
+Inspected the 7 most recent runs across 3 pipeline(s).
+1 failing now, 0 recovered after a failure, 2 with no failures in the window.
+
+FAILING  customer-enrichment
+  Latest run   customer-enrichment-r3 failed 3h ago at step 'fetch-customers' after 1.8s
+  Streak       2 consecutive failed run(s); last success customer-enrichment-r1 2.1d ago
+  Cause        source_query_failed (data_source, source side)
+  Error        Source query failed: relation "crm.customers" does not exist (step fetch-customers)
+  Suggested    Check that the source table exists in the connected database, then run the pipeline again.
+  Retry state  no retry is waiting; re-run manually after fixing the cause (1 attempt(s) in this run chain)
+  Drill down   getPipelineRun / getPipelineRunProgress with run_slug=customer-enrichment-r3
+------------------------------------------------------------------------
+Stale-pipeline check for fake-org-20261118-133813-897316569/data-pipelines (environment dev)
+Checked 3 deployed pipeline(s): 2 stale, 1 healthy.
+
+STALE  inventory-export
+  Last success  inventory-export-r2 5d ago
+  Expectation   a successful run at least every 24h; deadline passed 4d ago (overdue by 4d)
+  Latest run    inventory-export-r2 succeeded 5d ago
+  Next step     no failure to blame: check why inventory-export is not being triggered or finishing
+
+STALE  customer-enrichment
+  Last success  customer-enrichment-r1 2.1d ago
+  Expectation   a successful run at least every 24h; deadline passed 27h ago (overdue by 27h)
+  Latest run    customer-enrichment-r3 failed 3h ago
+  Next step     run triage_failed_runs for the cause
+
+HEALTHY  orders-daily-sync (last success 2h ago, allowed 24h)
+------------------------------------------------------------------------
+listProjects -> {"has_more":false,"projects":[{"created_at":"2026-11-18T13:38:14.160789Z","name":"Data pipelines","pipeline_backend":null,"slug":"data-pipelines","updated_at":"2026-11-18T13:38:14.160789Z"}]}
+
+OK: findings match the seeded fixtures

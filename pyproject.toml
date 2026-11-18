@@ -1,0 +1,27 @@
+[project]
+name = "braidplane-core-mcp"
+version = "0.1.0"
+description = "Read-only MCP server for a self-hosted Braidplane Core: failed-run triage and stale-pipeline checks"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+dependencies = [
+    "mcp>=2.3.0,<3",
+    "httpx>=0.28.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.5.0",
+    "respx>=0.23.1",
+]
+
+# Run with `uv run server.py`; this is an application, not an installable package.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
